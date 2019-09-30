@@ -1,19 +1,28 @@
 from flask import Flask
+from flask_bootstrap import Bootstrap
 from config import Config
 import logging
 from logging.handlers import RotatingFileHandler, SMTPHandler
 import os
 
 
+bootstrap = Bootstrap()
+
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    bootstrap.init_app(app)
+
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from app.auth import bp as auth_bp
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+
     # Error handling
-    if not app.debug:
+    if not app.debug and not app.testing:
         # Sending errors by email
         if app.config['MAIL_SERVER']:
             auth = None
