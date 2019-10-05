@@ -3,5 +3,5 @@ from app.auth import bp
 
 
 @bp.route('/login')
-def index():
+def login():
     return render_template('login.html')
