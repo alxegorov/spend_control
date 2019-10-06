@@ -1,0 +1,11 @@
+Dear {{ user.username }},
+
+To finish your registration click on the following link:
+
+{{ url_for('auth.login', token=token, _external=True) }}
+
+If you have not requested a registration simply ignore this message.
+
+Sincerely,
+
+The Spend Control Team

@@ -19,7 +19,7 @@ class User(db.Model):
 
     def get_auth_apply_token(self, expires_in=216000):
         return jwt.encode(
-            {'auth_apply': self.id, 'exp': time() + expires_in}, current_app.config['SECRET_KEY'],
+            {'auth_apply': self.id}, current_app.config['SECRET_KEY'],
             algorithm='HS256').decode('utf-8')
 
     @staticmethod
