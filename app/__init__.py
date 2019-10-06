@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from config import Config
 import logging
@@ -12,6 +13,7 @@ import os
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
+mail = Mail()
 bootstrap = Bootstrap()
 
 
@@ -19,11 +21,14 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    # Packages
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
+    mail.init_app(app)
     bootstrap.init_app(app)
 
+    # Blueprints
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
