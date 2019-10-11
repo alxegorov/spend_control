@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request
-from flask_login import login_user, current_user
+from flask_login import login_user, logout_user, current_user
 from werkzeug.urls import url_parse
 from app import db
 from app.auth import bp
@@ -23,6 +23,12 @@ def login():
             next_page = url_for('main.index')
         return redirect(next_page)
     return render_template('login.html', form=form)
+
+
+@bp.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
 
 
 @bp.route('/register', methods=['GET', 'POST'])
