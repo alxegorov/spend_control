@@ -1,10 +1,11 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, current_app
 from flask_login import login_user, logout_user, current_user
 from werkzeug.urls import url_parse
 from app import db
 from app.auth import bp
 from app.models import User
 from app.auth.forms import LoginForm, RegistrationForm
+from app.email import send_email
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -37,10 +38,20 @@ def register():
         return redirect(url_for('main.index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        # Add user to database
+        user = User(username=form.username.data, email=form.email.data, active=False)
         user.set_password(form.password.data)
+        token = user.get_activate_token()
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are a registered user now!')
+
+        # Send activate email
+        token = user.get_activate_token()
+        send_email(subject='[Spend_control] User activation',
+                   sender=current_app.config['ADMINS'][0],
+                   recipients=[user.email],
+                   text_body=render_template('email/register_apply.txt', user=user, token=token),
+                   html_body=render_template('email/register_apply.html', user=user, token=token))
+        flash('Please, check email to activate your account.')
         return redirect(url_for('auth.login'))
     return render_template('register.html', form=form)

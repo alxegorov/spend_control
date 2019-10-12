@@ -10,6 +10,10 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    active = db.Column(db.Boolean)
+
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -17,21 +21,20 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def get_auth_apply_token(self, expires_in=216000):
-        return jwt.encode(
-            {'auth_apply': self.id}, current_app.config['SECRET_KEY'],
-            algorithm='HS256').decode('utf-8')
+    def get_activate_token(self):
+        return jwt.encode({'auth_apply': self.id}, current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     @staticmethod
-    def verify_auth_apply_token(token):
+    def check_activate_token(token):
         try:
             id = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])['auth_apply']
         except:
             return
         return User.query.get(id)
 
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
+    @property
+    def is_active(self):
+        return self.active
 
 
 @login.user_loader
