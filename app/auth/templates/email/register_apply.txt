@@ -2,7 +2,7 @@ Dear {{ user.username }},
 
 To finish your registration click on the following link:
 
-{{ url_for('auth.login', token=token, _external=True) }}
+{{ url_for('auth.activate', token=token, _external=True) }}
 
 If you have not requested a registration simply ignore this message.
 

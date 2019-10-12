@@ -18,7 +18,11 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('auth.login'))
+        if user.active is False:
+            flash('Your account not active. Please, confirm your email.')
+            return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
+        flash('{}, welcome to Spend Control!'.format(user.username))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('main.index')
@@ -28,6 +32,7 @@ def login():
 
 @bp.route('/logout')
 def logout():
+    flash('Goodbye, {}!'.format(current_user.username))
     logout_user()
     return redirect(url_for('main.index'))
 
@@ -55,3 +60,14 @@ def register():
         flash('Please, check email to activate your account.')
         return redirect(url_for('auth.login'))
     return render_template('register.html', form=form)
+
+
+@bp.route('/activate/<token>')
+def activate(token):
+    user = User.activate_user(token)
+    db.session.commit()
+    if not user:
+        flash('Activation error')
+        return redirect(url_for('main.index'))
+    flash('Your account is activated. Please, sign in.')
+    return redirect(url_for('auth.login'))

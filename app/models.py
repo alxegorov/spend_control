@@ -25,12 +25,14 @@ class User(UserMixin, db.Model):
         return jwt.encode({'auth_apply': self.id}, current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     @staticmethod
-    def check_activate_token(token):
+    def activate_user(token):
         try:
             id = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])['auth_apply']
+            act_user = User.query.get(id)
+            act_user.active = True
         except:
             return
-        return User.query.get(id)
+        return act_user
 
     @property
     def is_active(self):
