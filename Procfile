@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn spendcontrol:app
+web: flask db upgrade; gunicorn spend_control:app
