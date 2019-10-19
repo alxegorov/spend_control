@@ -16,3 +16,5 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['spend.control.web@gmail.com']
+
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
