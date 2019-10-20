@@ -67,7 +67,7 @@ msgstr "%(username)s, добро пожаловать в Контроль рас
 #: app/auth/routes.py:36
 #, python-format
 msgid "Goodbye, %(username)s!"
-msgstr "Досвидания, %(username)s!"
+msgstr "До свидания, %(username)s!"
 
 #: app/auth/routes.py:53
 msgid "Please, check email to activate your account."
