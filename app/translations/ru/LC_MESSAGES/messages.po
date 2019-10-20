@@ -62,7 +62,7 @@ msgstr "Ваш аккаунт не активирован. Пожалуйста,
 #: app/auth/routes.py:26
 #, python-format
 msgid "%(username)s, welcome to Spend Control!"
-msgstr "%(username)s, добро пожаловать в Контроль расходов!"
+msgstr "%(username)s, добро пожаловать в "Контроль расходов"!"
 
 #: app/auth/routes.py:36
 #, python-format
