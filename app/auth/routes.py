@@ -46,10 +46,9 @@ def register():
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, active=False)
         user.set_password(form.password.data)
-        token = user.get_activate_token()
+        send_user_activate_email(user)
         db.session.add(user)
         db.session.commit()
-        send_user_activate_email(user)
         flash(_('Please, check email to activate your account.'))
         return redirect(url_for('auth.login'))
     return render_template('register.html', form=form)

@@ -41,7 +41,7 @@ msgstr "Почта"
 
 #: app/auth/forms.py:19 app/auth/forms.py:40
 msgid "Repeat Password"
-msgstr "Сбросить пароль"
+msgstr "Повторить пароль"
 
 #: app/auth/forms.py:20
 msgid "Register"
