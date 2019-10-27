@@ -37,9 +37,20 @@ class UserModelCase(unittest.TestCase):
         u = User(username='susan')
         db.session.add(u)
         db.session.commit()
-        token = u.get_activate_token()
-        User.activate_user(token)
+        token1 = u.get_activate_token()
+        token2 = '12345'
+        User.activate_user(token1)
         self.assertTrue(u.is_active)
+        self.assertIsNone(User.activate_user(token2))
+
+    def test_reset_password_token(self):
+        u = User(username='susan')
+        db.session.add(u)
+        db.session.commit()
+        token1 = u.get_reset_password_token()
+        token2 = '12345'
+        self.assertEqual(User.verify_reset_password_token(token1), u)
+        self.assertIsNone(User.verify_reset_password_token(token2))
 
 
 if __name__ == '__main__':
