@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+            <h1>{{ _('Add Car') }}</h1>
+            {{ wtf.quick_form(form) }}
+            <br>
+        </div>
+    </div>
+{% endblock %}

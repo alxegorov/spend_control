@@ -38,6 +38,9 @@ def create_app(config_class=Config):
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
+    from app.spends import bp as spends_bp
+    app.register_blueprint(spends_bp, url_prefix='/spends')
+
     # Error handling
     if not app.debug and not app.testing:
         # Sending errors by email
