@@ -15,8 +15,11 @@ class AddCarForm(FlaskForm):
 class AddNewCarForm(FlaskForm):
     manufacturer = StringField(_l('Manufacturer'), validators=[DataRequired])
     model = StringField(_l('Model'), validators=[DataRequired])
-    fueltype = StringField(_l('Fuel type'), validators=[DataRequired])
-    enginevolume = StringField(_l('Engine volume'), validators=[DataRequired])
+    fueltype = SelectField(_l('Fuel type'),
+                           choices=[('gasoline', _l('gasoline')), ('diesel', _l('diesel')), ('gas', _l('gas')),
+                                    ('electricity', _l('electricity'))],
+                           validators=[InputRequired])
+    enginevolume = StringField(_l('Engine volume (сс)'), validators=[DataRequired])
     enginepower = StringField(_l('Engine power'), validators=[DataRequired])
     submit = SubmitField(_l('Add'))
     cancel = SubmitField(_l('Cancel'))
