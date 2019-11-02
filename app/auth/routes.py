@@ -46,10 +46,14 @@ def register():
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, active=False)
         user.set_password(form.password.data)
-        send_user_activate_email(user)
-        db.session.add(user)
-        db.session.commit()
-        flash(_('Please, check email to activate your account.'))
+        try:
+            send_user_activate_email(user)
+            db.session.add(user)
+            db.session.commit()
+            flash(_('Please, check email to activate your account.'))
+        except:
+            db.session.rollback()
+            flash('Registration error. Please try again later')
         return redirect(url_for('auth.login'))
     return render_template('register.html', form=form)
 
