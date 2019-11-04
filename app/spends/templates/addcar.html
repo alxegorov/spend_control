@@ -1,12 +1,46 @@
 {% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
     <div class="row justify-content-center">
-        <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-            <h1>{{ _('Add Car') }}</h1>
-            {{ wtf.quick_form(form) }}
-            <br>
+        <div class="col-md-8 col-sm-6 col-md-offset-2 col-sm-offset-3">
+            <div align="right">
+                <a href="{{ url_for('spends.addnewcar') }}" class="btn btn-primary">Add new car</a>
+            </div>
+            <h1 align="center">{{ _('Add Car') }}</h1>
+            <table class="table">
+                <thead class="thead-default">
+                    <tr>
+                        <th>{{ _('Manufacturer') }}</th>
+                        <th>{{ _('Model') }}</th>
+                        <th>{{ _('Fuel type') }}</th>
+                        <th>{{ _('Engine volume') }}</th>
+                        <th>{{ _('Engine power') }}</th>
+                    </tr>
+                </thead>
+                {% for car in cars %}
+                    <tr>
+                        <td>{{ car.manufacturer }}</td>
+                        <td>{{ car.model }}</td>
+                        <td>{{ car.fuel_type }}</td>
+                        <td>{{ car.engine_volume }}</td>
+                        <td>{{ car.engine_power }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> {{ _('Previous') }}
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            {{ _('Next') }} <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 {% endblock %}

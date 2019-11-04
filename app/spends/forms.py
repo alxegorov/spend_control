@@ -4,14 +4,6 @@ from wtforms import SelectField, StringField, SubmitField
 from wtforms.validators import InputRequired, DataRequired
 
 
-class AddCarForm(FlaskForm):
-    manufacturer = SelectField(_l('Manufacturer'), coerce=int, validators=[InputRequired])
-    model = SelectField(_l('Manufacturer'), coerce=int, validators=[InputRequired])
-    fueltype = SelectField(_l('Fuel type'), coerce=int, validators=[InputRequired])
-    enginevolume = SelectField(_l('Engine volume'), coerce=int, validators=[InputRequired])
-    enginepower = SelectField(_l('Engine power'), coerce=int, validators=[InputRequired])
-
-
 class AddNewCarForm(FlaskForm):
     manufacturer = StringField(_l('Manufacturer'), validators=[DataRequired()])
     model = StringField(_l('Model'), validators=[DataRequired()])
