@@ -7,6 +7,11 @@ from app.spends.forms import AddNewCarForm
 from app.models import CarModel
 
 
+@bp.route('/')
+def index():
+    return render_template('start.html')
+
+
 @bp.route('/addcar', methods=['GET', 'POST'])
 def addcar():
     page = request.args.get('page', 1, type=int)
