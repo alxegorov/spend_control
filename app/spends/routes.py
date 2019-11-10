@@ -12,6 +12,16 @@ def index():
     return render_template('start.html')
 
 
+@bp.route('/moving')
+def moving():
+    return render_template('moving.html')
+
+
+@bp.route('/car')
+def car():
+    return render_template('car.html')
+
+
 @bp.route('/addcar', methods=['GET', 'POST'])
 def addcar():
     page = request.args.get('page', 1, type=int)

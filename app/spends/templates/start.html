@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
-
+<div class="row">
+    <div class="col-sm-4">
+        <h4>{{ _('Moving') }}</h4>
+        <p>{{ _('Spends for your moving') }}</p>
+        <a href="{{ url_for('spends.moving') }}" class="btn btn-primary">{{ _('Go to moving') }}</a>
+    </div>
+</div>
 {% endblock %}

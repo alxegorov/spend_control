@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="col-sm-4">
+        <h4>{{ _('Add car') }}</h4>
+        <p>{{ _('Add car to your garage') }}</p>
+        <a href="{{ url_for('spends.addcar') }}" class="btn btn-primary">{{ _('Choose car') }}</a>
+    </div>
+{% endblock %}
