@@ -2,7 +2,7 @@
 
 {% block app_content %}
     <div class="row justify-content-center">
-        <div class="col-md-8 col-sm-6 col-md-offset-2 col-sm-offset-3">
+        <div class="col-md-10 col-sm-6 col-md-offset-1 col-sm-offset-3">
             <div align="right">
                 <a href="{{ url_for('spends.addnewcar') }}" class="btn btn-primary">Add new car</a>
             </div>
@@ -15,6 +15,7 @@
                         <th>{{ _('Fuel type') }}</th>
                         <th>{{ _('Engine volume') }}</th>
                         <th>{{ _('Engine power') }}</th>
+                        <th>{{ _('Adding') }}</th>
                     </tr>
                 </thead>
                 {% for car in cars %}
@@ -24,6 +25,7 @@
                         <td>{{ car.fuel_type }}</td>
                         <td>{{ car.engine_volume }}</td>
                         <td>{{ car.engine_power }}</td>
+                        <td><a href="#" class="btn btn-primary">{{ _('Add') }}</a></td>
                     </tr>
                 {% endfor %}
             </table>
