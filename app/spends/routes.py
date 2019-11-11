@@ -1,10 +1,10 @@
 from flask import render_template, redirect, url_for, flash, request, current_app
 from flask_babel import _
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app import db
 from app.spends import bp
 from app.spends.forms import AddNewCarForm
-from app.models import CarModel
+from app.models import CarModel, Car
 
 
 @bp.route('/')
@@ -19,7 +19,11 @@ def moving():
 
 @bp.route('/car')
 def car():
-    return render_template('car.html')
+    page = request.args.get('page', 1, type=int)
+    cars = Car.query.filter(Car.user_id == current_user.id).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('spends.addcar', page=cars.next_num) if cars.has_next else None
+    prev_url = url_for('spends.addcar', page=cars.prev_num) if cars.has_prev else None
+    return render_template('car.html', cars=cars.items, next_url=next_url, prev_url=prev_url)
 
 
 @bp.route('/addcar', methods=['GET', 'POST'])
@@ -42,5 +46,17 @@ def addnewcar():
         db.session.add(car)
         db.session.commit()
         flash(_('New car added'))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('spends.addcar'))
     return render_template('addnewcar.html', form=form)
+
+
+@bp.route('/addnewcar/add')
+@login_required
+def addingcar():
+    user_id = request.args.get('user_id', type=int)
+    car_model_id = request.args.get('car_model_id', type=int)
+    car = Car(car_model_id=car_model_id, user_id=user_id)
+    db.session.add(car)
+    db.session.commit()
+    flash(_('Car was added'))
+    return redirect(url_for('spends.car'))
