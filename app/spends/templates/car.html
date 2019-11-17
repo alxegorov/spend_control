@@ -26,7 +26,7 @@
                         <td>{{ car.model.engine_volume }}</td>
                         <td>{{ car.model.engine_power }}</td>
                         <td>{{ car.trip }}</td>
-                        <td><a href="{{ url_for('spends.addcarspend') }}" class="btn btn-primary">{{ _('Add spend') }}</a></td>
+                        <td><a href="{{ url_for('spends.addcarspend', car_id=car.id) }}" class="btn btn-primary">{{ _('Add spend') }}</a></td>
                     </tr>
                 {% endfor %}
             </table>

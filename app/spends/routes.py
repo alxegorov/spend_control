@@ -3,7 +3,7 @@ from flask_babel import _
 from flask_login import login_required, current_user
 from app import db
 from app.spends import bp
-from app.spends.forms import AddNewCarForm
+from app.spends.forms import AddNewCarForm, AddCarSpendForm
 from app.models import CarModel, Car
 
 
@@ -62,7 +62,8 @@ def addingcar():
     return redirect(url_for('spends.car'))
 
 
-@bp.route('/car/addspend')
+@bp.route('/car/addspend/<car_id>')
 @login_required
-def addcarspend():
-    pass
+def addcarspend(car_id):
+    form = AddCarSpendForm()
+    return render_template('addcarspend.html', form=form)
