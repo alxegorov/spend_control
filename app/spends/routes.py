@@ -50,7 +50,7 @@ def addnewcar():
     return render_template('addnewcar.html', form=form)
 
 
-@bp.route('/addnewcar/add')
+@bp.route('/addcar/add')
 @login_required
 def addingcar():
     user_id = request.args.get('user_id', type=int)
@@ -60,3 +60,9 @@ def addingcar():
     db.session.commit()
     flash(_('Car was added'))
     return redirect(url_for('spends.car'))
+
+
+@bp.route('/car/addspend')
+@login_required
+def addcarspend():
+    pass

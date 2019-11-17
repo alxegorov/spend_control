@@ -2,7 +2,7 @@
 <!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
 <!-- Active URL: https://ondras.zarovi.cz/sql/demo/ -->
 <sql>
-    <datatypes db="sqlite">
+<datatypes db="sqlite">
 	    <group label="Affinity">
 		    <type label="Text" default="" length="1" sql="TEXT" quote="'" color="rgb(255,200,200)"/>
 		    <type label="Numeric" default="0" length="0" sql="NUMERIC" quote="" color="rgb(238,238,170)"/>
@@ -10,30 +10,117 @@
 		    <type label="Real" default="0" length="0" sql="REAL" quote="" color="rgb(238,238,170)"/>
 		    <type label="None" default="" length="0" sql="NONE" quote="" color="rgb(200,255,200)"/>
 	    </group>
-    </datatypes>
-    <table x="100" y="50" name="User">
-        <row name="id" null="0" autoincrement="1"><datatype>INTEGER</datatype></row>
-        <row name="username" null="0" autoincrement="0"><datatype>TEXT(64)</datatype></row>
-        <row name="email" null="0" autoincrement="0"><datatype>TEXT(120)</datatype></row>
-        <row name="password_hash" null="0" autoincrement="0"><datatype>TEXT(128)</datatype></row>
-        <row name="active" null="0" autoincrement="0"><datatype>NUMERIC</datatype></row>
-        <key type="PRIMARY" name=""><part>id</part></key>
-    </table>
-    <table x="400" y="50" name="Car">
-        <row name="id" null="0" autoincrement="0"><datatype>INTEGER</datatype></row>
-        <row name="trip" null="0" autoincrement="0"><datatype>INTEGER</datatype></row>
-        <row name="car_model_id" null="0" autoincrement="0"><datatype>INTEGER</datatype><relation table="CarModel" row="id" /></row>
-        <row name="user_id" null="0" autoincrement="0"><datatype>INTEGER</datatype><relation table="User" row="id" /></row>
-        <row name="id_CarModel" null="0" autoincrement="0"><datatype>INTEGER</datatype></row>
-        <key type="PRIMARY" name=""><part>id</part></key>
-    </table>
-    <table x="700" y="52" name="CarModel">
-        <row name="id" null="0" autoincrement="1"><datatype>INTEGER</datatype></row>
-        <row name="manufacturer" null="0" autoincrement="0"><datatype>TEXT(120)</datatype></row>
-        <row name="model" null="0" autoincrement="0"><datatype>TEXT(120)</datatype></row>
-        <row name="fuel_type" null="0" autoincrement="0"><datatype>TEXT(20)</datatype></row>
-        <row name="engine_volume" null="0" autoincrement="0"><datatype>INTEGER</datatype></row>
-        <row name="engine_power" null="0" autoincrement="0"><datatype>INTEGER</datatype></row>
-        <key type="PRIMARY" name=""><part>id</part></key>
-    </table>
+    </datatypes><table x="100" y="50" name="User">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="username" null="0" autoincrement="0">
+<datatype>TEXT(64)</datatype>
+</row>
+<row name="email" null="0" autoincrement="0">
+<datatype>TEXT(120)</datatype>
+</row>
+<row name="password_hash" null="0" autoincrement="0">
+<datatype>TEXT(128)</datatype>
+</row>
+<row name="active" null="0" autoincrement="0">
+<datatype>NUMERIC</datatype>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="400" y="50" name="Car">
+<row name="id" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+</row>
+<row name="trip" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+</row>
+<row name="start_trip" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+</row>
+<row name="buy_price" null="0" autoincrement="0">
+<datatype>REAL</datatype>
+</row>
+<row name="buy_time" null="0" autoincrement="0">
+<datatype>TEXT</datatype>
+</row>
+<row name="sale_time" null="1" autoincrement="0">
+<datatype>TEXT</datatype>
+<default>NULL</default></row>
+<row name="car_model_id" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="CarModel" row="id" />
+</row>
+<row name="user_id" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="User" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="700" y="52" name="CarModel">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="manufacturer" null="0" autoincrement="0">
+<datatype>TEXT(120)</datatype>
+</row>
+<row name="model" null="0" autoincrement="0">
+<datatype>TEXT(120)</datatype>
+</row>
+<row name="fuel_type" null="0" autoincrement="0">
+<datatype>TEXT(20)</datatype>
+</row>
+<row name="engine_volume" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+</row>
+<row name="engine_power" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="700" y="301" name="CarSpend">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="timestamp" null="0" autoincrement="0">
+<datatype>TEXT</datatype>
+</row>
+<row name="trip" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+</row>
+<row name="price" null="0" autoincrement="0">
+<datatype>REAL</datatype>
+</row>
+<row name="amount" null="0" autoincrement="0">
+<datatype>REAL</datatype>
+</row>
+<row name="car_id" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="Car" row="id" />
+</row>
+<row name="car_spend_type_id" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="CarSpendType" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="900" y="301" name="CarSpendType">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="type" null="0" autoincrement="0">
+<datatype>TEXT(140)</datatype>
+<default>'NULL'</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
 </sql>

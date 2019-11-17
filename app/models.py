@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from time import time
+from datetime import datetime
 
 
 class User(UserMixin, db.Model):
@@ -72,5 +73,26 @@ class CarModel(db.Model):
 class Car(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     trip = db.Column(db.Integer)
+    start_trip = db.Column(db.Integer)
+    buy_price = db.Column(db.Float)
+    buy_time = db.Column(db.DateTime)
+    sale_time = db.Column(db.DateTime, index=True)
     car_model_id = db.Column(db.Integer, db.ForeignKey('car_model.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    spends = db.relationship('CarSpend', backref='car', lazy='dynamic')
+
+
+class CarSpendType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(140), index=True)
+    spends = db.relationship('CarSpend', backref='type', lazy='dynamic')
+
+
+class CarSpend(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    trip = db.Column(db.Integer)
+    price = db.Column(db.Float)
+    amount = db.Column(db.Integer)
+    car_id = db.Column(db.Integer, db.ForeignKey('car.id'))
+    car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))
