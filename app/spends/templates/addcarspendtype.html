@@ -4,10 +4,7 @@
 {% block app_content %}
     <div class="row justify-content-center">
         <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-            <div align="right">
-                <a href="{{ url_for('spends.addcarspendtype') }}" class="btn btn-primary">{{ _('New spend type') }}</a>
-            </div>
-            <h1 align="center">{{ _('Spend') }}</h1>
+            <h1 align="center">{{ _('Add Car Spend Type') }}</h1>
             {{ wtf.quick_form(form) }}
             <br>
         </div>

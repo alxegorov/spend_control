@@ -3,8 +3,8 @@ from flask_babel import _
 from flask_login import login_required, current_user
 from app import db
 from app.spends import bp
-from app.spends.forms import AddNewCarForm, AddCarSpendForm
-from app.models import CarModel, Car
+from app.spends.forms import AddNewCarForm, AddCarSpendForm, AddCarSpendTypeForm
+from app.models import CarModel, Car, CarSpendType
 
 
 @bp.route('/')
@@ -18,6 +18,7 @@ def moving():
 
 
 @bp.route('/car')
+@login_required
 def car():
     page = request.args.get('page', 1, type=int)
     cars = Car.query.filter(Car.user_id == current_user.id).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
@@ -62,8 +63,22 @@ def addingcar():
     return redirect(url_for('spends.car'))
 
 
-@bp.route('/car/addspend/<car_id>')
+@bp.route('/car/addspend/<car_id>', methods=['GET', 'POST'])
 @login_required
 def addcarspend(car_id):
     form = AddCarSpendForm()
+    form.spend_type.choices = [(t.id, t.type) for t in CarSpendType.query.all()]
     return render_template('addcarspend.html', form=form)
+
+
+@bp.route('car/addspendtype', methods=['GET', 'POST'])
+@login_required
+def addcarspendtype():
+    form = AddCarSpendTypeForm()
+    if form.validate_on_submit():
+        type = CarSpendType(type=form.type.data)
+        db.session.add(type)
+        db.session.commit()
+        flash(_('New type car spend was added'))
+        return redirect(url_for('spends.car'))
+    return render_template('addcarspendtype.html', form=form)
