@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-10-20 18:09+0300\n"
+"POT-Creation-Date: 2019-11-24 00:53+0300\n"
 "PO-Revision-Date: 2019-10-20 18:19+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -47,6 +47,14 @@ msgstr "Повторить пароль"
 msgid "Register"
 msgstr "Зарегистрироваться"
 
+#: app/auth/forms.py:25
+msgid "Please use a different username."
+msgstr "Пожалуйста, используйте другое имя пользователя"
+
+#: app/auth/forms.py:30
+msgid "Please use a different email address."
+msgstr "Пожалуйста, используйте другой адрес почты"
+
 #: app/auth/forms.py:35 app/auth/forms.py:41
 msgid "Request Password Reset"
 msgstr "Запросить сброс пароля"
@@ -62,7 +70,7 @@ msgstr "Ваш аккаунт не активирован. Пожалуйста,
 #: app/auth/routes.py:26
 #, python-format
 msgid "%(username)s, welcome to Spend Control!"
-msgstr "%(username)s, добро пожаловать в "Контроль расходов"!"
+msgstr "%(username)s, добро пожаловать в \"Контроль расходов\"!"
 
 #: app/auth/routes.py:36
 #, python-format
@@ -73,27 +81,27 @@ msgstr "До свидания, %(username)s!"
 msgid "Please, check email to activate your account."
 msgstr "Проверте, пожалуста, вашу почту для активации аккаунта."
 
-#: app/auth/routes.py:63
+#: app/auth/routes.py:66
 msgid "Activation error"
 msgstr "Ошибка активации"
 
-#: app/auth/routes.py:65
+#: app/auth/routes.py:68
 msgid "Your account is activated. Please, sign in."
 msgstr "Ваш аккаунт активирован. Пожалуйста, войдите."
 
-#: app/auth/routes.py:78
+#: app/auth/routes.py:81
 msgid "Check your email for the instructions to reset your password."
 msgstr "На вашу почту направлены инструкции по сбросу пароля."
 
-#: app/auth/routes.py:89
+#: app/auth/routes.py:92
 msgid "Reset password error."
 msgstr "Ошибка сброса пароля."
 
-#: app/auth/routes.py:95
+#: app/auth/routes.py:98
 msgid "Your password has been reset."
 msgstr "Ваш пароль был сброшен."
 
-#: app/auth/templates/login.html:10 app/main/templates/base.html:23
+#: app/auth/templates/login.html:10 app/main/templates/base.html:24
 msgid "Sign up"
 msgstr "Регистрация"
 
@@ -121,11 +129,192 @@ msgstr "Контроль расходов"
 msgid "Home"
 msgstr "Главная"
 
-#: app/main/templates/base.html:22
+#: app/main/templates/base.html:19 app/main/templates/index.html:6
+#: app/spends/templates/car.html:18
+msgid "Spends"
+msgstr "Расходы"
+
+#: app/main/templates/base.html:23
 msgid "Sign in"
 msgstr "Вход"
 
-#: app/main/templates/base.html:25
+#: app/main/templates/base.html:26
 msgid "Sign out"
 msgstr "Выход"
+
+#: app/main/templates/index.html:7
+msgid "Liabilities. Expenditure. Something that requires resources."
+msgstr "Пассивы. Статьи расходов. То, что требует ресурсов."
+
+#: app/main/templates/index.html:8
+msgid "Go to spends"
+msgstr "Перейти к расходам"
+
+#: app/spends/forms.py:9 app/spends/templates/addcar.html:13
+#: app/spends/templates/car.html:12
+msgid "Manufacturer"
+msgstr "Марка"
+
+#: app/spends/forms.py:10 app/spends/templates/addcar.html:14
+#: app/spends/templates/car.html:13
+msgid "Model"
+msgstr "Модель"
+
+#: app/spends/forms.py:11 app/spends/templates/addcar.html:15
+#: app/spends/templates/car.html:14
+msgid "Fuel type"
+msgstr "Тип топлива"
+
+#: app/spends/forms.py:12
+msgid "gasoline"
+msgstr "бензин"
+
+#: app/spends/forms.py:12
+msgid "diesel"
+msgstr "дизель"
+
+#: app/spends/forms.py:12
+msgid "gas"
+msgstr "газ"
+
+#: app/spends/forms.py:13
+msgid "electricity"
+msgstr "электричество"
+
+#: app/spends/forms.py:15
+msgid "Engine volume (сс)"
+msgstr "Объем двигателя"
+
+#: app/spends/forms.py:16 app/spends/templates/addcar.html:17
+#: app/spends/templates/car.html:16
+msgid "Engine power"
+msgstr "Мощьность двигателя"
+
+#: app/spends/forms.py:17 app/spends/forms.py:26 app/spends/forms.py:31
+#: app/spends/templates/addcar.html:28
+msgid "Add"
+msgstr "Добавить"
+
+#: app/spends/forms.py:21 app/spends/templates/addcarspend.html:20
+msgid "Date"
+msgstr "Дата"
+
+#: app/spends/forms.py:22 app/spends/templates/car.html:17
+msgid "Trip"
+msgstr "Пробег"
+
+#: app/spends/forms.py:23 app/spends/forms.py:30
+#: app/spends/templates/addcarspend.html:21
+msgid "Spend type"
+msgstr "Тип расходов"
+
+#: app/spends/forms.py:24 app/spends/templates/addcarspend.html:22
+msgid "Price"
+msgstr "Цена"
+
+#: app/spends/forms.py:25 app/spends/templates/addcarspend.html:23
+msgid "Amount"
+msgstr "Количество"
+
+#: app/spends/routes.py:49
+msgid "New car added"
+msgstr "Новая машина добавлена"
+
+#: app/spends/routes.py:62
+msgid "Car was added"
+msgstr "Машина добавлена"
+
+#: app/spends/routes.py:76
+msgid "Spend added"
+msgstr "Расход добавлен"
+
+#: app/spends/routes.py:94
+msgid "New type car spend was added"
+msgstr "Новый тип расходов на машину добавлен"
+
+#: app/spends/templates/addcar.html:7
+msgid "Add new car"
+msgstr "Добавить новую машину"
+
+#: app/spends/templates/addcar.html:9
+msgid "Add Car"
+msgstr "Добавить машину"
+
+#: app/spends/templates/addcar.html:16 app/spends/templates/car.html:15
+msgid "Engine volume"
+msgstr "Объем двигателя"
+
+#: app/spends/templates/addcar.html:18
+msgid "Adding"
+msgstr "Добавление"
+
+#: app/spends/templates/addcar.html:36 app/spends/templates/addcarspend.html:41
+#: app/spends/templates/car.html:37
+msgid "Previous"
+msgstr "Предыдущая"
+
+#: app/spends/templates/addcar.html:41 app/spends/templates/addcarspend.html:46
+#: app/spends/templates/car.html:42
+msgid "Next"
+msgstr "Следующая"
+
+#: app/spends/templates/addcarspend.html:8
+msgid "New spend type"
+msgstr "Новый тип расходов"
+
+#: app/spends/templates/addcarspend.html:10
+msgid "Spend"
+msgstr "Расход"
+
+#: app/spends/templates/addcarspend.html:16
+msgid "Spends table"
+msgstr "Таблица расходов"
+
+#: app/spends/templates/addcarspend.html:24
+msgid "Sum"
+msgstr "Сумма"
+
+#: app/spends/templates/addcarspendtype.html:7
+msgid "Add Car Spend Type"
+msgstr "Добавить новый вид автомобильных расходов"
+
+#: app/spends/templates/addnewcar.html:7
+msgid "Add New Car"
+msgstr "Добавить новую машину"
+
+#: app/spends/templates/car.html:6
+msgid "Add car"
+msgstr "Добавить машину"
+
+#: app/spends/templates/car.html:8
+msgid "My Cars"
+msgstr "Мои машины"
+
+#: app/spends/templates/car.html:29
+msgid "Add spend"
+msgstr "Добавить расход"
+
+#: app/spends/templates/moving.html:6
+msgid "Car"
+msgstr "Машина"
+
+#: app/spends/templates/moving.html:7
+msgid "Spends for your car"
+msgstr "Расходы на вашу машину"
+
+#: app/spends/templates/moving.html:8
+msgid "Go to car"
+msgstr "Перейти к машине"
+
+#: app/spends/templates/start.html:6
+msgid "Moving"
+msgstr "Передвижение"
+
+#: app/spends/templates/start.html:7
+msgid "Spends for your moving"
+msgstr "Расходы на передвижение"
+
+#: app/spends/templates/start.html:8
+msgid "Go to moving"
+msgstr "Перейти"
 
