@@ -4,7 +4,8 @@ from flask_login import login_required, current_user
 from app import db
 from app.spends import bp
 from app.spends.forms import AddNewCarForm, AddCarSpendForm, AddCarSpendTypeForm
-from app.models import CarModel, Car, CarSpendType
+from app.models import Car, CarModel, CarSpend, CarSpendType
+import datetime
 
 
 @bp.route('/')
@@ -68,6 +69,13 @@ def addingcar():
 def addcarspend(car_id):
     form = AddCarSpendForm()
     form.spend_type.choices = [(t.id, t.type) for t in CarSpendType.query.all()]
+    if form.validate_on_submit():
+        spend = CarSpend(timestamp=form.timestamp.data, trip=form.trip.data, price=form.price.data,
+                         amount=form.amount.data, car_id=car_id, car_spend_type_id=form.spend_type.data)
+        db.session.add(spend)
+        db.session.commit()
+        flash(_('Spend added'))
+        return redirect(url_for('spends.car'))
     return render_template('addcarspend.html', form=form)
 
 
