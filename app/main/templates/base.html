@@ -1,6 +1,8 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}{{ _('Spend control') }}{% endblock %}
+{% block title %}
+    {% if title %}{{ title }} - {{ _('Spend control') }}{% else %}{{ _('Spend control') }}{% endif %}
+{% endblock %}
 
 {% block navbar %}
 <nav class="navbar navbar-default">
