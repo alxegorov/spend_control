@@ -22,7 +22,7 @@ class AddCarSpendForm(FlaskForm):
     trip = IntegerField(_l('Trip'), validators=[DataRequired(), NumberRange()])
     spend_type = SelectField(_l('Spend type'), coerce=int)
     price = FloatField(_l('Price'), validators=[DataRequired()])
-    amount = IntegerField(_l('Amount'), validators=[DataRequired()])
+    amount = FloatField(_l('Amount'), validators=[DataRequired()])
     submit = SubmitField(_l('Add'))
 
 
