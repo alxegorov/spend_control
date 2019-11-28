@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_babel import lazy_gettext as _l
-from wtforms import SelectField, StringField, SubmitField, IntegerField, FloatField
+from wtforms import SelectField, StringField, SubmitField, IntegerField, FloatField, DecimalField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import InputRequired, DataRequired, NumberRange
 
@@ -21,7 +21,7 @@ class AddCarSpendForm(FlaskForm):
     timestamp = DateField(_l('Date'))
     trip = IntegerField(_l('Trip'), validators=[DataRequired(), NumberRange()])
     spend_type = SelectField(_l('Spend type'), coerce=int)
-    price = FloatField(_l('Price'), validators=[DataRequired()])
+    price = DecimalField(_l('Price'), validators=[DataRequired()])
     amount = FloatField(_l('Amount'), validators=[DataRequired()])
     submit = SubmitField(_l('Add'))
 
