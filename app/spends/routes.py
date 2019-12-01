@@ -9,12 +9,12 @@ from app.models import Car, CarModel, CarSpend, CarSpendType
 
 @bp.route('/')
 def index():
-    return render_template('start.html')
+    return render_template('start.html', title=_('Spends'))
 
 
 @bp.route('/moving')
 def moving():
-    return render_template('moving.html')
+    return render_template('moving.html', title=_('Moving'))
 
 
 @bp.route('/car')
@@ -24,7 +24,7 @@ def car():
     cars = Car.query.filter(Car.user_id == current_user.id).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('spends.addcar', page=cars.next_num) if cars.has_next else None
     prev_url = url_for('spends.addcar', page=cars.prev_num) if cars.has_prev else None
-    return render_template('car.html', cars=cars.items, next_url=next_url, prev_url=prev_url)
+    return render_template('car.html', cars=cars.items, next_url=next_url, prev_url=prev_url, title=_('Cars'))
 
 
 @bp.route('/addcar', methods=['GET', 'POST'])
@@ -34,7 +34,7 @@ def addcar():
                                    CarModel.model.asc()).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('spends.addcar', page=cars.next_num) if cars.has_next else None
     prev_url = url_for('spends.addcar', page=cars.prev_num) if cars.has_prev else None
-    return render_template('addcar.html', cars=cars.items, next_url=next_url, prev_url=prev_url)
+    return render_template('addcar.html', cars=cars.items, next_url=next_url, prev_url=prev_url, title=_('Add Car'))
 
 
 @bp.route('/addnewcar', methods=['GET', 'POST'])
@@ -48,7 +48,7 @@ def addnewcar():
         db.session.commit()
         flash(_('New car added'))
         return redirect(url_for('spends.addcar'))
-    return render_template('addnewcar.html', form=form)
+    return render_template('addnewcar.html', form=form, title=_('Add New Car'))
 
 
 @bp.route('/addcar/add')
@@ -80,7 +80,8 @@ def addcarspend(car_id):
                                                                        False)
     next_url = url_for('spends.addcar', page=spends.next_num) if spends.has_next else None
     prev_url = url_for('spends.addcar', page=spends.prev_num) if spends.has_prev else None
-    return render_template('addcarspend.html', form=form, spends=spends.items, next_url=next_url, prev_url=prev_url)
+    return render_template('addcarspend.html', form=form, spends=spends.items, next_url=next_url, prev_url=prev_url,
+                           title=_('Add Car Spend'))
 
 
 @bp.route('car/addspendtype', methods=['GET', 'POST'])
@@ -93,4 +94,4 @@ def addcarspendtype():
         db.session.commit()
         flash(_('New type car spend was added'))
         return redirect(url_for('spends.car'))
-    return render_template('addcarspendtype.html', form=form)
+    return render_template('addcarspendtype.html', form=form, title=_('Add Car Spend Type'))
