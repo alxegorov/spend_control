@@ -93,6 +93,6 @@ class CarSpend(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     trip = db.Column(db.Integer)
     price = db.Column(db.Float)
-    amount = db.Column(db.Integer)
+    amount = db.Column(db.Float)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'))
     car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))
