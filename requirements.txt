@@ -47,7 +47,7 @@ python-dotenv==0.7.1
 python-editor==1.0.3
 python-openid==2.2.5
 pytz==2017.2
-pyxdg==0.25
+pyxdg==0.26
 redis==3.2.1
 requests==2.22.0
 rq==1.0
