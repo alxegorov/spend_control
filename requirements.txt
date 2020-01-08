@@ -27,7 +27,6 @@ Flask-WhooshAlchemy==0.56
 Flask-WTF==0.14.2
 flup==1.0.3
 guess-language-spirit==0.5.3
-gyp==0.1
 httpie==1.0.3
 idna==2.6
 ipaddress==1.0.17
