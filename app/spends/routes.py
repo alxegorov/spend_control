@@ -84,6 +84,15 @@ def addcarspend(car_id):
                            title=_('Add Car Spend'))
 
 
+@bp.route('/car/dellspend/<id>')
+@login_required
+def dellcarspend(id):
+    spend = CarSpend.query.get(id)
+    db.session.delete(spend)
+    db.session.commit()
+    return redirect(url_for('spends.car'))
+
+
 @bp.route('car/addspendtype', methods=['GET', 'POST'])
 @login_required
 def addcarspendtype():
