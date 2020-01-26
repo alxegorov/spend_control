@@ -1,5 +1,5 @@
 from app import db, login
-from flask import current_app
+from flask import current_app, jsonify
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
@@ -110,6 +110,17 @@ class CarSpendType(db.Model):
     type = db.Column(db.String(140), index=True)
     spends = db.relationship('CarSpend', backref='type', lazy='dynamic')
 
+    def __repr__(self):
+        return '<Type {}>'.format(self.type)
+
+    @staticmethod
+    def to_json():
+        data = []
+        types = CarSpendType.query.all()
+        for t in types:
+            data.append({'id': t.id, 'value': t.type})
+        return jsonify(data)
+
 
 class CarSpend(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -118,4 +129,4 @@ class CarSpend(db.Model):
     price = db.Column(db.Float)
     amount = db.Column(db.Float)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'))
-    car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))
+    car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))                             

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-24 00:53+0300\n"
+"POT-Creation-Date: 2020-01-26 11:38+0300\n"
 "PO-Revision-Date: 2019-10-20 18:19+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -17,7 +17,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.7.0\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: app/__init__.py:18
+msgid "Please log in to access this page."
+msgstr ""
 
 #: app/auth/forms.py:9 app/auth/forms.py:16
 msgid "Username"
@@ -31,7 +35,7 @@ msgstr "Пароль"
 msgid "Remember Me"
 msgstr "Запомнить меня"
 
-#: app/auth/forms.py:12 app/auth/templates/login.html:7
+#: app/auth/forms.py:12 app/auth/routes.py:31 app/auth/templates/login.html:7
 msgid "Sign In"
 msgstr "Вход"
 
@@ -81,6 +85,10 @@ msgstr "До свидания, %(username)s!"
 msgid "Please, check email to activate your account."
 msgstr "Проверте, пожалуста, вашу почту для активации аккаунта."
 
+#: app/auth/routes.py:58
+msgid "Sign Up"
+msgstr ""
+
 #: app/auth/routes.py:66
 msgid "Activation error"
 msgstr "Ошибка активации"
@@ -93,6 +101,11 @@ msgstr "Ваш аккаунт активирован. Пожалуйста, во
 msgid "Check your email for the instructions to reset your password."
 msgstr "На вашу почту направлены инструкции по сбросу пароля."
 
+#: app/auth/routes.py:83 app/auth/routes.py:100
+#: app/auth/templates/login.html:10
+msgid "Reset password"
+msgstr "Сброс пароля"
+
 #: app/auth/routes.py:92
 msgid "Reset password error."
 msgstr "Ошибка сброса пароля."
@@ -101,13 +114,9 @@ msgstr "Ошибка сброса пароля."
 msgid "Your password has been reset."
 msgstr "Ваш пароль был сброшен."
 
-#: app/auth/templates/login.html:10 app/main/templates/base.html:24
+#: app/auth/templates/login.html:10 app/main/templates/base.html:26
 msgid "Sign up"
 msgstr "Регистрация"
-
-#: app/auth/templates/login.html:10
-msgid "Reset password"
-msgstr "Сброс пароля"
 
 #: app/auth/templates/register.html:7
 msgid "Create your account"
@@ -117,28 +126,24 @@ msgstr "Создание аккаунта"
 msgid "Reset Your Password"
 msgstr "Сброс пароля"
 
-#: app/auth/templates/reset_password_request.html:7
-msgid "Reset Password"
-msgstr "Сбросить пароль"
-
-#: app/main/templates/base.html:3
-msgid "Spend control"
-msgstr "Контроль расходов"
-
-#: app/main/templates/base.html:18
+#: app/main/routes.py:9 app/main/templates/base.html:20
 msgid "Home"
 msgstr "Главная"
 
-#: app/main/templates/base.html:19 app/main/templates/index.html:6
-#: app/spends/templates/car.html:18
+#: app/main/templates/base.html:4
+msgid "Spend control"
+msgstr "Контроль расходов"
+
+#: app/main/templates/base.html:21 app/main/templates/index.html:6
+#: app/spends/routes.py:12 app/spends/templates/car.html:18
 msgid "Spends"
 msgstr "Расходы"
 
-#: app/main/templates/base.html:23
+#: app/main/templates/base.html:25
 msgid "Sign in"
 msgstr "Вход"
 
-#: app/main/templates/base.html:26
+#: app/main/templates/base.html:28
 msgid "Sign out"
 msgstr "Выход"
 
@@ -216,9 +221,25 @@ msgstr "Цена"
 msgid "Amount"
 msgstr "Количество"
 
+#: app/spends/routes.py:17 app/spends/templates/start.html:6
+msgid "Moving"
+msgstr "Передвижение"
+
+#: app/spends/routes.py:27
+msgid "Cars"
+msgstr ""
+
+#: app/spends/routes.py:37 app/spends/templates/addcar.html:9
+msgid "Add Car"
+msgstr "Добавить машину"
+
 #: app/spends/routes.py:49
 msgid "New car added"
 msgstr "Новая машина добавлена"
+
+#: app/spends/routes.py:51 app/spends/templates/addnewcar.html:7
+msgid "Add New Car"
+msgstr "Добавить новую машину"
 
 #: app/spends/routes.py:62
 msgid "Car was added"
@@ -228,17 +249,21 @@ msgstr "Машина добавлена"
 msgid "Spend added"
 msgstr "Расход добавлен"
 
-#: app/spends/routes.py:94
+#: app/spends/routes.py:84
+msgid "Add Car Spend"
+msgstr ""
+
+#: app/spends/routes.py:104
 msgid "New type car spend was added"
 msgstr "Новый тип расходов на машину добавлен"
+
+#: app/spends/routes.py:106 app/spends/templates/addcarspendtype.html:7
+msgid "Add Car Spend Type"
+msgstr "Добавить новый вид автомобильных расходов"
 
 #: app/spends/templates/addcar.html:7
 msgid "Add new car"
 msgstr "Добавить новую машину"
-
-#: app/spends/templates/addcar.html:9
-msgid "Add Car"
-msgstr "Добавить машину"
 
 #: app/spends/templates/addcar.html:16 app/spends/templates/car.html:15
 msgid "Engine volume"
@@ -248,12 +273,12 @@ msgstr "Объем двигателя"
 msgid "Adding"
 msgstr "Добавление"
 
-#: app/spends/templates/addcar.html:36 app/spends/templates/addcarspend.html:41
+#: app/spends/templates/addcar.html:36 app/spends/templates/addcarspend.html:43
 #: app/spends/templates/car.html:37
 msgid "Previous"
 msgstr "Предыдущая"
 
-#: app/spends/templates/addcar.html:41 app/spends/templates/addcarspend.html:46
+#: app/spends/templates/addcar.html:41 app/spends/templates/addcarspend.html:48
 #: app/spends/templates/car.html:42
 msgid "Next"
 msgstr "Следующая"
@@ -274,13 +299,10 @@ msgstr "Таблица расходов"
 msgid "Sum"
 msgstr "Сумма"
 
-#: app/spends/templates/addcarspendtype.html:7
-msgid "Add Car Spend Type"
-msgstr "Добавить новый вид автомобильных расходов"
-
-#: app/spends/templates/addnewcar.html:7
-msgid "Add New Car"
-msgstr "Добавить новую машину"
+#: app/spends/templates/addcarspend.html:25
+#: app/spends/templates/addcarspend.html:35
+msgid "Delete"
+msgstr ""
 
 #: app/spends/templates/car.html:6
 msgid "Add car"
@@ -306,10 +328,6 @@ msgstr "Расходы на вашу машину"
 msgid "Go to car"
 msgstr "Перейти к машине"
 
-#: app/spends/templates/start.html:6
-msgid "Moving"
-msgstr "Передвижение"
-
 #: app/spends/templates/start.html:7
 msgid "Spends for your moving"
 msgstr "Расходы на передвижение"
@@ -317,4 +335,7 @@ msgstr "Расходы на передвижение"
 #: app/spends/templates/start.html:8
 msgid "Go to moving"
 msgstr "Перейти"
+
+#~ msgid "Reset Password"
+#~ msgstr "Сбросить пароль"
 
