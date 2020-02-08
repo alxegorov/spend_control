@@ -129,4 +129,4 @@ class CarSpend(db.Model):
     price = db.Column(db.Float)
     amount = db.Column(db.Float)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'))
-    car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))                             
+    car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))
