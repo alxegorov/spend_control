@@ -3,7 +3,7 @@ from app.api.auth import token_auth
 from app.models import CarSpendType, Car
 from flask import jsonify, g
 
-@bp.route('/spends/move/cars', methods=['GET'])
+@bp.route('/spends/move/car/cars', methods=['GET'])
 @token_auth.login_required
 def get_cars():
     data = []
@@ -16,3 +16,8 @@ def get_cars():
 @token_auth.login_required
 def get_car_spend_typs():
     return CarSpendType.to_json()
+
+@bp.route('spends/move/car/newspend', methods=['POST'])
+@token_auth.login_required
+def new_spend():
+    pass
