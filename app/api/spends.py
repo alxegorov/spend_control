@@ -27,6 +27,4 @@ def new_spend():
                      amount=float(data['mount']), car_id=int(data['car']), car_spend_type_id=int(data['type']))
     db.session.add(spend)
     db.session.commit()
-    response=jsonify([])
-    response.status_code = 201
-    return response
+    return 'OK'
