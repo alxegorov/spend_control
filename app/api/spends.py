@@ -3,6 +3,7 @@ from app.api import bp
 from app.api.auth import token_auth
 from app.models import CarSpendType, Car, CarSpend
 from flask import jsonify, g, request
+from sqlalchemy import desc
 from dateutil import parser
 
 @bp.route('/spends/move/car/cars', methods=['GET'])
@@ -28,3 +29,39 @@ def new_spend():
     db.session.add(spend)
     db.session.commit()
     return 'OK'
+
+@bp.route('spends/move/car/<int:id>/fuelconsumtion', methods=['GET'])
+@token_auth.login_required
+def get_fuel_consumption(id):
+    query = db.session.query(CarSpend)
+    types = CarSpendType.query.filter(CarSpendType.type.like('Бензин%')).all()
+    for t in types:
+        query = query.filter(CarSpend.car_id==id, CarSpend.car_spend_type_id==t.id)
+    fuel_spends = query.all()
+    amount = 0
+    for s in fuel_spends:
+        amount = amount + s.amount
+    first_spend = query.order_by(CarSpend.trip).first()
+    last_spend = query.order_by(desc(CarSpend.trip)).first()
+    trip = last_spend.trip - first_spend.trip
+    if trip != 0:
+        fuel_cons = {'fuel_consumtion': amount / trip}
+    else:
+        fuel_cons = {'fuel_consumtion': 0}
+    return jsonify(fuel_cons)
+    
+
+@bp.route('spends/move/car/<int:id>/kmprice', methods=['GET'])
+@token_auth.login_required
+def get_km_price(id):
+    pass
+
+@bp.route('spends/move/car/<int:id>/mounthprice', methods=['GET'])
+@token_auth.login_required
+def get_mounth_price(id):
+    pass
+
+@bp.route('spends/move/car/<int:id>/yearprice', methods=['GET'])
+@token_auth.login_required
+def get_year_price(id):
+    pass
