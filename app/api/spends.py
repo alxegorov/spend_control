@@ -39,7 +39,7 @@ def get_fuel_consumption(id):
         fuel_types.append(t.id)
     fuel_spends = CarSpend.query.filter(CarSpend.car_id==id, CarSpend.car_spend_type_id.in_(fuel_types)).all()
     amount = 0
-    for i in range(len(fuel_spends) - 2):
+    for i in range(len(fuel_spends) - 1):
         amount = amount + fuel_spends[i].amount
     first_spend = fuel_spends[0]
     last_spend = fuel_spends[len(fuel_spends) - 1]
