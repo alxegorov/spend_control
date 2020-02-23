@@ -33,16 +33,16 @@ def new_spend():
 @bp.route('spends/move/car/<int:id>/fuelconsumtion', methods=['GET'])
 @token_auth.login_required
 def get_fuel_consumption(id):
-    query = db.session.query(CarSpend)
+    fuel_types = []
     types = CarSpendType.query.filter(CarSpendType.type.like('Бензин%')).all()
     for t in types:
-        query = query.filter(CarSpend.car_id==id, CarSpend.car_spend_type_id==t.id)
-    fuel_spends = query.all()
+        fuel_types.append(t.id)
+    fuel_spends = CarSpend.query.filter(CarSpend.car_id==id, CarSpend.car_spend_type_id.in_(fuel_types)).all()
     amount = 0
-    for s in fuel_spends:
-        amount = amount + s.amount
-    first_spend = query.order_by(CarSpend.trip).first()
-    last_spend = query.order_by(desc(CarSpend.trip)).first()
+    for i in range(len(fuel_spends) - 2):
+        amount = amount + fuel_spends[i].amount
+    first_spend = fuel_spends[0]
+    last_spend = fuel_spends[len(fuel_spends) - 1]
     trip = last_spend.trip - first_spend.trip
     if trip != 0:
         fuel_cons = {'fuel_consumtion': amount / trip}
