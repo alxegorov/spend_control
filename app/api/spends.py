@@ -45,7 +45,7 @@ def get_fuel_consumption(id):
     last_spend = fuel_spends[len(fuel_spends) - 1]
     trip = last_spend.trip - first_spend.trip
     if trip != 0:
-        fuel_cons = {'fuel_consumtion': amount / trip * 100}
+        fuel_cons = {'fuel_consumtion': round((amount / trip * 100),1)}
     else:
         fuel_cons = {'fuel_consumtion': 0}
     return jsonify(fuel_cons)
