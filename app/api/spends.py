@@ -3,7 +3,6 @@ from app.api import bp
 from app.api.auth import token_auth
 from app.models import CarSpendType, Car, CarSpend
 from flask import jsonify, g, request
-from sqlalchemy import desc
 from dateutil import parser
 
 @bp.route('/spends/move/car/cars', methods=['GET'])
