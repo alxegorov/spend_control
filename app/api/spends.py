@@ -39,7 +39,7 @@ def get_fuel_consumption(id):
     fuel_spends = CarSpend.query.filter(CarSpend.car_id==id, CarSpend.car_spend_type_id.in_(fuel_types)).all()
     amount = 0
     for i in range(len(fuel_spends) - 1):
-        amount = amount + fuel_spends[i].amount
+        amount += fuel_spends[i].amount
     first_spend = fuel_spends[0]
     last_spend = fuel_spends[len(fuel_spends) - 1]
     trip = last_spend.trip - first_spend.trip
@@ -53,7 +53,18 @@ def get_fuel_consumption(id):
 @bp.route('spends/move/car/<int:id>/kmprice', methods=['GET'])
 @token_auth.login_required
 def get_km_price(id):
-    pass
+    spends = CarSpend.query.filter(CarSpend.car_id==id).all()
+    price = 0
+    for s in spends:
+        price += s.price
+    first_spend = spends[0]
+    last_spend = spends[len(spends) - 1]
+    trip = last_spend.trip - first_spend.trip
+    if trip != 0:
+        unit_price = {'unit_price': round((price / trip), 2)}
+    else:
+        unit_price = {'unit_price': 0}
+    return jsonify(unit_price)
 
 @bp.route('spends/move/car/<int:id>/mounthprice', methods=['GET'])
 @token_auth.login_required
