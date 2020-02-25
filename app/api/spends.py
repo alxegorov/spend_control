@@ -56,7 +56,7 @@ def get_km_price(id):
     spends = CarSpend.query.filter(CarSpend.car_id==id).all()
     price = 0
     for s in spends:
-        price += s.price
+        price += s.price * s.amount
     first_spend = spends[0]
     last_spend = spends[len(spends) - 1]
     trip = last_spend.trip - first_spend.trip
