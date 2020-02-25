@@ -44,7 +44,7 @@ def get_fuel_consumption(id):
     last_spend = fuel_spends[len(fuel_spends) - 1]
     trip = last_spend.trip - first_spend.trip
     if trip != 0:
-        fuel_cons = {'fuel_consumtion': round((amount / trip * 100), 2)}
+        fuel_cons = {'fuel_consumtion': round((amount / trip * 100), 1)}
     else:
         fuel_cons = {'fuel_consumtion': 0}
     return jsonify(fuel_cons)
@@ -61,7 +61,7 @@ def get_km_price(id):
     last_spend = spends[len(spends) - 1]
     trip = last_spend.trip - first_spend.trip
     if trip != 0:
-        unit_price = {'unit_price': round((price / trip), 3)}
+        unit_price = {'unit_price': round((price / trip), 2)}
     else:
         unit_price = {'unit_price': 0}
     return jsonify(unit_price)
