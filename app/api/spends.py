@@ -69,7 +69,18 @@ def get_km_price(id):
 @bp.route('spends/move/car/<int:id>/mounthprice', methods=['GET'])
 @token_auth.login_required
 def get_mounth_price(id):
-    pass
+    spends = CarSpend.query.filter(CarSpend.car_id==id).all()
+    price = 0
+    for s in spends:
+        price += s.price * s.amount
+    first_spend = spends[0]
+    last_spend = spends[len(spends) - 1]
+    days = last_spend.timestamp - first_spend.timestamp
+    if days != 0:
+        mounth_price = {'mounth_price': round(price / days.days * 30)}
+    else:
+        mounth_price = {'mounth_price': 0}
+    return jsonify(mounth_price)
 
 @bp.route('spends/move/car/<int:id>/yearprice', methods=['GET'])
 @token_auth.login_required
