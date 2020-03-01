@@ -119,7 +119,7 @@ class CarSpendType(db.Model):
         types = CarSpendType.query.all()
         for t in types:
             data.append({'id': t.id, 'value': t.type})
-        return jsonify(data)
+        return data
 
 
 class CarSpend(db.Model):
