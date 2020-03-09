@@ -14,7 +14,9 @@ def new_spend():
                      amount=float(data['mount']), car_id=int(data['car']), car_spend_type_id=int(data['type']))
     db.session.add(spend)
     db.session.commit()
-    return 'OK'
+    response = []
+    response.status_code = 200
+    return response
 
 @bp.route('spends/move/car/start', methods=['GET'])
 @token_auth.login_required
