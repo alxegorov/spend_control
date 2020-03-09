@@ -78,8 +78,8 @@ def addcarspend(car_id):
     page = request.args.get('page', 1, type=int)
     spends = CarSpend.query.filter(CarSpend.car_id == car_id).paginate(page, current_app.config['POSTS_PER_PAGE'],
                                                                        False)
-    next_url = url_for('spends.addcar', page=spends.next_num) if spends.has_next else None
-    prev_url = url_for('spends.addcar', page=spends.prev_num) if spends.has_prev else None
+    next_url = url_for('spends.addspend', page=spends.next_num) if spends.has_next else None
+    prev_url = url_for('spends.addspend', page=spends.prev_num) if spends.has_prev else None
     return render_template('addcarspend.html', form=form, spends=spends.items, next_url=next_url, prev_url=prev_url,
                            title=_('Add Car Spend'))
 
