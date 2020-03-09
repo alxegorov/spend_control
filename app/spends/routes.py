@@ -76,10 +76,9 @@ def addcarspend(car_id):
         flash(_('Spend added'))
         return redirect(url_for('spends.car'))
     page = request.args.get('page', 1, type=int)
-    spends = CarSpend.query.filter(CarSpend.car_id == car_id).paginate(page, current_app.config['POSTS_PER_PAGE'],
-                                                                       False)
-    next_url = url_for('spends.addcarspend', page=spends.next_num) if spends.has_next else None
-    prev_url = url_for('spends.addcarspend', page=spends.prev_num) if spends.has_prev else None
+    spends = CarSpend.query.filter(CarSpend.car_id == car_id).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('spends.addcarspend[car_id]', page=spends.next_num) if spends.has_next else None
+    prev_url = url_for('spends.addcarspend[car_id]', page=spends.prev_num) if spends.has_prev else None
     return render_template('addcarspend.html', form=form, spends=spends.items, next_url=next_url, prev_url=prev_url,
                            title=_('Add Car Spend'))
 
