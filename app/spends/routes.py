@@ -36,6 +36,14 @@ def addcar():
     prev_url = url_for('spends.addcar', page=cars.prev_num) if cars.has_prev else None
     return render_template('addcar.html', cars=cars.items, next_url=next_url, prev_url=prev_url, title=_('Add Car'))
 
+@bp.route('/dellcar/<id>', methods=['GET', 'POST'])
+@login_required
+def dellcar(id):
+    car = Car.query.get(id)
+    db.session.delete(car)
+    db.session.commit()
+    return redirect(url_for('spends.car'))
+
 
 @bp.route('/addnewcar', methods=['GET', 'POST'])
 @login_required

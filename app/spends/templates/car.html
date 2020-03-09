@@ -16,6 +16,7 @@
                         <th>{{ _('Engine power') }}</th>
                         <th>{{ _('Trip') }}</th>
                         <th>{{ _('Spends') }}</th>
+                        <th>{{ _('Delete') }}</th>
                     </tr>
                 </thead>
                 {% for car in cars %}
@@ -27,6 +28,7 @@
                         <td>{{ car.model.engine_power }}</td>
                         <td>{{ car.trip }}</td>
                         <td><a href="{{ url_for('spends.addcarspend', car_id=car.id) }}" class="btn btn-primary">{{ _('Add spend') }}</a></td>
+                        <td><a href="{{ url_for('spends.dellcar', id=car.id) }}" class="btn btn-primary">{{ _('Delete') }}</a></td>
                     </tr>
                 {% endfor %}
             </table>
