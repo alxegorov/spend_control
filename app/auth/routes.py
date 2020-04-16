@@ -47,9 +47,9 @@ def register():
         user = User(username=form.username.data, email=form.email.data, active=False)
         user.set_password(form.password.data)
         try:
-            send_user_activate_email(user)
             db.session.add(user)
             db.session.commit()
+            send_user_activate_email(user)
             flash(_('Please, check email to activate your account.'))
         except:
             db.session.rollback()
