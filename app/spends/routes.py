@@ -3,7 +3,7 @@ from flask_babel import _
 from flask_login import login_required, current_user
 from app import db
 from app.spends import bp
-from app.spends.forms import AddNewCarForm, AddCarSpendForm, AddCarSpendTypeForm
+from app.spends.forms import AddNewCarForm, AddCarSpendForm, AddCarSpendTypeForm, AddCarTripForm
 from app.models import Car, CarModel, CarSpend, CarSpendType
 
 
@@ -69,6 +69,18 @@ def addingcar():
     db.session.commit()
     flash(_('Car was added'))
     return redirect(url_for('spends.car'))
+
+
+@bp.route('car/addtrip/<car_id>,', methods=['GET', 'POST'])
+@login_required
+def addcartrip(car_id):
+    form = AddCarTripForm()
+    if form.validate_on_submit():
+        car = Car.query.get(car_id)
+        car.trip = form.trip.data
+        db.session.commit()
+        return redirect(url_for('spends.car'))
+    return render_template('addcartrip.html', form=form)
 
 
 @bp.route('/car/addspend/<car_id>', methods=['GET', 'POST'])

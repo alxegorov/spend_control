@@ -17,6 +17,10 @@ class AddNewCarForm(FlaskForm):
     submit = SubmitField(_l('Add'))
 
 
+class AddCarTripForm(FlaskForm):
+    trip = IntegerField(_l('Trip'), validators=[DataRequired(), NumberRange()])
+    submit = SubmitField(_l('Add'))
+
 class AddCarSpendForm(FlaskForm):
     timestamp = DateField(_l('Date'))
     trip = IntegerField(_l('Trip'), validators=[DataRequired(), NumberRange()])

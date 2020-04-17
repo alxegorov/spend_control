@@ -7,6 +7,7 @@ from time import time
 from datetime import datetime, timedelta
 import base64
 import os
+from sqlalchemy import event
 
 
 class User(UserMixin, db.Model):
@@ -105,6 +106,17 @@ class Car(db.Model):
     spends = db.relationship('CarSpend', backref='car', lazy='dynamic')
 
 
+    @staticmethod
+    def update_trip(session):
+        for obj in session.new:
+            if obj.__class__.__name__ == 'CarSpend':
+                current_car = Car.query.get(obj.car_id)
+                if current_car.trip == None:
+                    current_car.trip = obj.trip
+                elif obj.trip > current_car.trip:
+                    current_car.trip = obj.trip
+                
+
 class CarSpendType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(140), index=True)
@@ -130,3 +142,6 @@ class CarSpend(db.Model):
     amount = db.Column(db.Float)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'))
     car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))
+
+
+db.event.listen(db.session, 'before_commit', Car.update_trip)

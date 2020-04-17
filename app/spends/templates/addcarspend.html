@@ -18,6 +18,7 @@
                 <thead class="thead-default">
                     <tr>
                         <th>{{ _('Date') }}</th>
+                        <th>{{ _('Trip') }}</th>
                         <th>{{ _('Spend type') }}</th>
                         <th>{{ _('Price') }}</th>
                         <th>{{ _('Amount') }}</th>
@@ -28,6 +29,7 @@
                 {% for spend in spends %}
                     <tr>
                         <td>{{ spend.timestamp }}</td>
+                        <td>{{ spend.trip }}</td>
                         <td>{{ spend.type.type }}</td>
                         <td>{{ spend.price }}</td>
                         <td>{{ spend.amount }}</td>
