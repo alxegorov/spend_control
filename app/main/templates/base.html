@@ -47,5 +47,13 @@
     {% endwith %}
 
     {% block app_content %}{% endblock %}
+    
+</div>
+<div class="row align-items-end">
+    <hr>
+    <div class="col-md-2 col-sm-4 col-md-offset-5 col-sm-offset-4 text-center">
+        <img src="{{ qrcode('https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40alxegorov/spend_control_mobile-2a78ab1f705944eda118a3117b21d2f4-signed.apk', box_size=2, border=0) }}">
+        <p>Android App</p>
+    </div>
 </div>
 {% endblock %}
