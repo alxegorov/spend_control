@@ -154,7 +154,8 @@ class CarSpend(db.Model):
     @staticmethod
     def get_fuel_prices():
         fuel_types = CarSpendType.get_fuel_types()
-        fuel_spends = CarSpend.query.filter(CarSpend.car_spend_type_id.in_(fuel_types)).all()
+        fuel_spends = CarSpend.query.filter(CarSpend.car_spend_type_id.in_(fuel_types),
+            CarSpend.price != 0).all()
         data = []
         for s in fuel_spends:
             data.append({"date": s.timestamp.isoformat(), 
