@@ -6,6 +6,7 @@ from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_babel import Babel, lazy_gettext as _l
 from flask_qrcode import QRcode
+from flask_moment import Moment
 from config import Config
 import logging
 from logging.handlers import RotatingFileHandler, SMTPHandler
@@ -21,6 +22,7 @@ mail = Mail()
 bootstrap = Bootstrap()
 babel = Babel()
 qrcode = QRcode()
+moment = Moment()
 
 
 def create_app(config_class=Config):
@@ -35,6 +37,7 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
     babel.init_app(app)
     qrcode.init_app(app)
+    moment.init_app(app)
 
     # Blueprints
     from app.main import bp as main_bp

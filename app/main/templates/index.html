@@ -1,11 +1,105 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<div class="row">
-    <div class="col-sm-4">
-        <h4>{{ _('Spends') }}</h4>
-        <p>{{ _('Liabilities. Expenditure. Something that requires resources.') }}</p>
-        <a href="{{ url_for('spends.index') }}" class="btn btn-primary">{{ _('Go to spends') }}</a>
-    </div>
+<div class="row text-center">
+    <h1>{{ _('Gas prices') }}</h1>
+    <canvas id="fuel_price" width="1000" height="600"></canvas>
 </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+    function draw(){
+        var ctx = document.getElementById('fuel_price').getContext('2d');
+        var data = JSON.parse("{{ data }}".replace(/&#39;/g,'"')).sort((a,b) => {
+            if (a.date > b.date) {
+                return 1;
+            }
+            if (a.date < b.date) {
+                return -1;
+            }
+            return 0;
+        })
+
+        var x0 = 60;
+        var xm = 980;
+        var y0 = 550;
+        var ym = 50;
+
+        var xl = 6;
+        var yl = 11;
+
+        var dx = (xm-x0)/xl
+        var dy = (y0-ym)/(yl-1)
+
+        // Grid
+        ctx.strokeStyle = "#d5d5d5";
+        ctx.lineWidth = 0.8
+        // Horizontal lines
+        for(var i=0;i<yl;i++){
+            ctx.beginPath();
+            ctx.moveTo(x0-10,ym+dy*i);
+            ctx.lineTo(xm,ym+dy*i);
+            ctx.stroke();
+        }
+        // Vertical lines
+        for(var i=0;i<xl;i++){
+            ctx.beginPath();
+            ctx.moveTo(x0+dx*i,ym);
+            ctx.lineTo(x0+dx*i,y0+10);
+            ctx.stroke();
+        }
+        
+        // Time line
+        var dates = data.map(item => Date.parse(item.date))
+        var datedelta = (dates[dates.length-1] - dates[0])/xl
+        for(var i=0;i<xl;i++){
+            ctx.fillText(formatDate(dates[0] + datedelta*i), x0-20+dx*i, y0+25)
+        }
+
+        // Value line
+        var values = data.map(item => item.value).sort((a,b) => (a-b))
+        var valuedelta = (values[values.length - 1] - values[0])/(yl - 3)
+        for(var i=0;i<yl;i++){
+            ctx.fillText((values[0] + valuedelta*(i-1)).toFixed(2), x0-40, y0+4-dy*i)
+        }
+
+        // Graf lines 
+        ddx = (xm-x0)/(datedelta*xl)
+        ddy = (y0-ym)/(valuedelta*(yl-1))
+        var types = [...new Set(data.map(item => item.type))]
+        var i = 1;
+        for(var type of types){
+            var dataset = data.filter(item => item.type == type)
+            ctx.strokeStyle = 'rgb(255,' +
+                       Math.floor(255-255/i) + ',0)';
+            ctx.beginPath();
+            ctx.moveTo(x0+(Date.parse(dataset[0].date) - dates[0])*ddx, 
+                       y0-(dataset[0].value-values[0]+valuedelta)*ddy)
+            for(var item of dataset) {
+                var x = x0+(Date.parse(item.date) - dates[0])*ddx
+                var y = y0-(item.value-(values[0] - valuedelta))*ddy
+                ctx.lineTo(x, y)
+            }
+            ctx.stroke()
+            // Legend
+            ctx.beginPath();
+            ctx.moveTo(x0+250*(i-1), ym-20);
+            ctx.lineTo(x0+40+250*(i-1), ym-20);
+            ctx.stroke();
+            ctx.fillText(type, x0+45+250*(i-1), ym-17.5)
+            i++;
+        }
+    }
+
+    function formatDate(ms){
+        var ms = new Date(ms);
+        var dtf = new Intl.DateTimeFormat('en', { year: '2-digit', month: '2-digit', day: '2-digit' }) 
+        var [{ value: mo },,{ value: da },,{ value: ye }] = dtf.formatToParts(ms) 
+        return (`${da}.${mo}.${ye}`)
+    }
+
+    draw()
+</script>
 {% endblock %}

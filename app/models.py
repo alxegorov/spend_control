@@ -123,7 +123,7 @@ class CarSpendType(db.Model):
     spends = db.relationship('CarSpend', backref='type', lazy='dynamic')
 
     def __repr__(self):
-        return '<Type {}>'.format(self.type)
+        return f'<Type {self.type}>'
 
     @staticmethod
     def to_json():
@@ -131,6 +131,14 @@ class CarSpendType(db.Model):
         types = CarSpendType.query.all()
         for t in types:
             data.append({'id': t.id, 'value': t.type})
+        return data
+
+    @staticmethod
+    def get_fuel_types():
+        data = []
+        types = CarSpendType.query.filter(CarSpendType.type.like('Бензин%')).all()
+        for t in types:
+            data.append(t.id)
         return data
 
 
@@ -142,6 +150,17 @@ class CarSpend(db.Model):
     amount = db.Column(db.Float)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'))
     car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))
+
+    @staticmethod
+    def get_fuel_prices():
+        fuel_types = CarSpendType.get_fuel_types()
+        fuel_spends = CarSpend.query.filter(CarSpend.car_spend_type_id.in_(fuel_types)).all()
+        data = []
+        for s in fuel_spends:
+            data.append({"date": s.timestamp.isoformat(), 
+                         "type": s.type.type, 
+                         "value": s.price})
+        return data
 
 
 db.event.listen(db.session, 'before_commit', Car.update_trip)

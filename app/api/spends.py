@@ -33,10 +33,7 @@ def get_start_info():
     spend_types = CarSpendType.to_json()
 
     # Fuel consumption
-    fuel_types = []
-    types = CarSpendType.query.filter(CarSpendType.type.like('Бензин%')).all()
-    for t in types:
-        fuel_types.append(t.id)
+    fuel_types = CarSpendType.get_fuel_types()
     current_car = Car.query.filter(Car.user_id == g.current_user.id).first()
     car_id = current_car.id
     fuel_spends = CarSpend.query.filter(CarSpend.car_id==car_id, CarSpend.car_spend_type_id.in_(fuel_types)).all()
