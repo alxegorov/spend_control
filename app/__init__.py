@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_bootstrap import Bootstrap
+from flask_bs4 import Bootstrap
 from flask_babel import Babel, lazy_gettext as _l
 from flask_qrcode import QRcode
 from flask_moment import Moment

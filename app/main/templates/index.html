@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<div class="row text-center">
-    <h1>{{ _('Gas prices') }}</h1>
-    <canvas id="fuel_price" width="1000" height="600"></canvas>
+<div class="row justify-content-center">
+    <div class="col-md-auto text-center">
+        <h1>{{ _('Gas prices') }}</h1>
+        <div class="dropdown text-left mb-3">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ _('Fuel type') }}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{{ url_for('main.index') }}">{{ _('All') }}</a>
+                {% for type in fuel_type %}
+                    <a class="dropdown-item" href="{{ url_for('main.index', ftype=type.id) }}">{{ type.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <canvas id="fuel_price" width="1000" height="600"></canvas>
+    </div>
 </div>
 {% endblock %}
 
@@ -22,10 +35,10 @@
             return 0;
         })
 
-        var x0 = 60;
-        var xm = 980;
-        var y0 = 550;
-        var ym = 50;
+        var x0 = 55;
+        var xm = 1000;
+        var y0 = 570;
+        var ym = 28;
 
         var xl = 6;
         var yl = 11;
@@ -53,16 +66,17 @@
         
         // Time line
         var dates = data.map(item => Date.parse(item.date))
-        var datedelta = (dates[dates.length-1] - dates[0])/xl
+        var datedelta = (dates[dates.length-1] - dates[0])/xl;
+        ctx.font = "16px Helvetica";
         for(var i=0;i<xl;i++){
-            ctx.fillText(formatDate(dates[0] + datedelta*i), x0-20+dx*i, y0+25)
+            ctx.fillText(formatDate(dates[0] + datedelta*i), x0-32+dx*i, y0+30)
         }
 
         // Value line
         var values = data.map(item => item.value).sort((a,b) => (a-b))
         var valuedelta = (values[values.length - 1] - values[0])/(yl - 3)
         for(var i=0;i<yl;i++){
-            ctx.fillText((values[0] + valuedelta*(i-1)).toFixed(2), x0-40, y0+4-dy*i)
+            ctx.fillText((values[0] + valuedelta*(i-1)).toFixed(2), x0-55, y0+6-dy*i)
         }
 
         // Graf lines 
@@ -85,10 +99,10 @@
             ctx.stroke()
             // Legend
             ctx.beginPath();
-            ctx.moveTo(x0+250*(i-1), ym-20);
-            ctx.lineTo(x0+40+250*(i-1), ym-20);
+            ctx.moveTo(x0+350*(i-1), ym-21);
+            ctx.lineTo(x0+40+350*(i-1), ym-21);
             ctx.stroke();
-            ctx.fillText(type, x0+45+250*(i-1), ym-17.5)
+            ctx.fillText(type, x0+45+350*(i-1), ym-16)
             i++;
         }
     }

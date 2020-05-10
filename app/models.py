@@ -152,9 +152,17 @@ class CarSpend(db.Model):
     car_spend_type_id = db.Column(db.Integer, db.ForeignKey('car_spend_type.id'))
 
     @staticmethod
-    def get_fuel_prices():
+    def get_fuel_prices(id=None):
         fuel_types = CarSpendType.get_fuel_types()
-        fuel_spends = CarSpend.query.filter(CarSpend.car_spend_type_id.in_(fuel_types),
+        if id == None:
+            f_fuel_types = fuel_types
+        else:
+            if id in fuel_types:
+                f_fuel_types = [id]
+            else:
+                return None
+
+        fuel_spends = CarSpend.query.filter(CarSpend.car_spend_type_id.in_(f_fuel_types),
             CarSpend.price != 0).all()
         data = []
         for s in fuel_spends:

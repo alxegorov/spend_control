@@ -1,4 +1,4 @@
-from flask import render_template, redirect, jsonify
+from flask import render_template, redirect, request
 from flask_babel import _
 from app.main import bp
 from app.models import CarSpend, CarSpendType
@@ -7,8 +7,18 @@ from app.models import CarSpend, CarSpendType
 @bp.route('/')
 @bp.route('/index')
 def index():
-    data = CarSpend.get_fuel_prices()
-    return render_template('index.html', title=_('Home'), data=data)
+    f_fuel_type = request.args.get('ftype', type=int)
+    data = CarSpend.get_fuel_prices(f_fuel_type)
+
+    fuel_type_id = CarSpendType.get_fuel_types()
+    fuel_type = []
+    for t in fuel_type_id:
+        fuel_type.append({
+            'id': t,
+            'title': CarSpendType.query.get(t).type
+        })
+
+    return render_template('index.html', title=_('Home'), data=data, fuel_type=fuel_type)
 
 
 @bp.route('/favicon.ico')
