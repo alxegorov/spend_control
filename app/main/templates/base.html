@@ -59,7 +59,13 @@
     <hr>
     <div class="container-fluid text-center">
         <img src="{{ qrcode('https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40alxegorov/spend_control_mobile-2a78ab1f705944eda118a3117b21d2f4-signed.apk', box_size=2, border=0) }}">
-        <p>Android App</p>
+        <p>{{ _('Android App') }}</p>
     </div>
 </footer>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+    {{ moment.lang(g.locale)}}
 {% endblock %}

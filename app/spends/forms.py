@@ -16,12 +16,12 @@ class AddNewCarForm(FlaskForm):
     enginepower = StringField(_l('Engine power'), validators=[DataRequired()])
     submit = SubmitField(_l('Add'))
 
-
-class AddCarTripForm(FlaskForm):
-    trip = IntegerField(_l('Trip'), validators=[DataRequired(), NumberRange()])
+class AddCarForm(FlaskForm):
+    car = SelectField(_l('Car'), coerce=int)
     submit = SubmitField(_l('Add'))
 
 class AddCarSpendForm(FlaskForm):
+    car = SelectField(_l('Car'), coerce=int)
     timestamp = DateField(_l('Date'))
     trip = IntegerField(_l('Trip'), validators=[DataRequired(), NumberRange()])
     spend_type = SelectField(_l('Spend type'), coerce=int)

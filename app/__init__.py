@@ -29,6 +29,12 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    @app.context_processor
+    def utility_processor():
+        def money_format(value):
+            return f'{value:.2f}'
+        return dict(money_format=money_format)
+
     # Packages
     db.init_app(app)
     migrate.init_app(app, db)
