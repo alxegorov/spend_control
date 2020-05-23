@@ -61,15 +61,6 @@ def index():
         prev_url=prev_url, add_spend_form=add_spend_form, add_spend_type_form=add_spend_type_form, cars=cars,
         add_new_car_form=add_new_car_form, add_car_form=add_car_form)
 
-@bp.route('/addcar', methods=['GET', 'POST'])
-def addcar():
-    page = request.args.get('page', 1, type=int)
-    cars = CarModel.query.order_by(CarModel.manufacturer.asc(),
-                                   CarModel.model.asc()).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('spends.addcar', page=cars.next_num) if cars.has_next else None
-    prev_url = url_for('spends.addcar', page=cars.prev_num) if cars.has_prev else None
-    return render_template('addcar.html', cars=cars.items, next_url=next_url, prev_url=prev_url, title=_('Add Car'))
-
 @bp.route('/dellcar/<id>', methods=['GET', 'POST'])
 @login_required
 def dellcar(id):
@@ -85,4 +76,5 @@ def dellcarspend(id):
     spend = CarSpend.query.get(id)
     db.session.delete(spend)
     db.session.commit()
-    return redirect(url_for('spends.car'))
+    flash(_('Spend was delleted'))
+    return redirect(url_for('spends.index'))
