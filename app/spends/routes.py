@@ -64,16 +64,23 @@ def index():
 @bp.route('/dellcar/<id>', methods=['GET', 'POST'])
 @login_required
 def dellcar(id):
-    car = Car.query.get(id)
+    car = Car.query.get_or_404(id)
+    if car.owner.id != current_user.id:
+        flash(_('Not valid car'))
+        return redirect(url_for('spends.index'))
     db.session.delete(car)
     db.session.commit()
-    return redirect(url_for('spends.car'))
+    flash(_('Car was delleted'))
+    return redirect(url_for('spends.index'))
 
 
 @bp.route('/car/dellspend/<id>')
 @login_required
 def dellcarspend(id):
-    spend = CarSpend.query.get(id)
+    spend = CarSpend.query.get_or_404(id)
+    if spend.car.owner.id != current_user.id:
+        flash(_('Not valid spend'))
+        redirect(url_for('spends.index'))
     db.session.delete(spend)
     db.session.commit()
     flash(_('Spend was delleted'))
